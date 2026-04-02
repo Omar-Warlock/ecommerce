@@ -1,5 +1,4 @@
-const navLinks = [{ title: "Home" }];
-const NavLinks = [
+export const NavLinks = [
   { title: "Home", link: "/" },
   { title: "About", link: "/about" },
   { title: "Accessories", link: "/accessories" },
