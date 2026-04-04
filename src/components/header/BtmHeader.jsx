@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -6,28 +6,11 @@ import { PiSignInBold } from "react-icons/pi";
 import { FaUserPlus } from "react-icons/fa6";
 
 import { NavLinks } from "../../DATA.JS";
+import { ContextAPI } from "../../ProductContext";
 
 function BtmHeader() {
-  const [categories, setCategories] = useState([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-
-  function handleFetchCategories(fetchedData) {
-    const categoriesName = fetchedData.map((category) => {
-      return {
-        name: category.name,
-        slug: category.slug,
-      };
-    });
-    console.log(categoriesName);
-    setCategories(categoriesName);
-  }
-
-  useEffect(() => {
-    fetch("https://dummyjson.com/products/categories")
-      .then((res) => res.json())
-      .then((body) => handleFetchCategories(body));
-  }, []);
-
+  const CategoriesContext = useContext(ContextAPI);
   return (
     <div className="btm_header">
       <div className="container">
@@ -45,7 +28,7 @@ function BtmHeader() {
             <div
               className={`category_nav_list ${isCategoryOpen ? "active" : ""}`}
             >
-              {categories.map((category) => (
+              {CategoriesContext.categories.map((category) => (
                 <Link key={category.slug} to={`category/${category.slug}`}>
                   {category.name}
                 </Link>
