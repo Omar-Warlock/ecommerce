@@ -1,12 +1,15 @@
 import BtmHeader from "./components/header/BtmHeader";
 import TopHeader from "./components/header/TopHeader";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
     <>
-      <TopHeader />
-
-      <BtmHeader />
+      <header>
+        <TopHeader />
+        <BtmHeader />
+      </header>
+      <Home />
     </>
   );
 }
