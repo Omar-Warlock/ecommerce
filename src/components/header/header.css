@@ -26,8 +26,7 @@ header {
 .top_header .logo {
   width: 160px;
 }
-
-.top_header .search_box {
+npm run dev .top_header .search_box {
   width: 500px;
   display: flex;
   align-items: center;

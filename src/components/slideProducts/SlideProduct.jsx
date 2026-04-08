@@ -42,6 +42,7 @@ function SlideProduct({ title, products }) {
           {products.map((item) => (
             <SwiperSlide key={item.id}>
               <Product
+                id={item.id}
                 title={item.title}
                 price={item.price}
                 image={item.images[0]}
