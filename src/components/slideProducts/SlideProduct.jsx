@@ -9,9 +9,34 @@ import "swiper/css/navigation";
 
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 
-function SlideProduct({ title, products }) {
-  if (!products) {
-    return <p className="loading">Loading {title}...</p>;
+function SlideProduct({ title, products = [], loading = false }) {
+  if (loading) {
+    return (
+      <div className="slide_products slide">
+        <div className="container">
+          <div className="top_slide">
+            <h2>{title}</h2>
+            <p>Best {title} products available now.</p>
+          </div>
+
+          <div className="products_skeleton_grid">
+            {[...Array(5)].map((_, index) => (
+              <div className="product_skeleton_card" key={index}>
+                <div className="skeleton skeleton-card-img"></div>
+                <div className="skeleton skeleton-card-title"></div>
+                <div className="skeleton skeleton-card-stars"></div>
+                <div className="skeleton skeleton-card-price"></div>
+                <div className="skeleton-icons">
+                  <div className="skeleton skeleton-icon"></div>
+                  <div className="skeleton skeleton-icon"></div>
+                  <div className="skeleton skeleton-icon"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -25,7 +50,7 @@ function SlideProduct({ title, products }) {
         <Swiper
           slidesPerView={1}
           spaceBetween={10}
-          loop={true}
+          loop={products.length > 1}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,

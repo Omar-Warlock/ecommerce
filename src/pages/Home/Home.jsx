@@ -14,27 +14,36 @@ const categories = [
 
 function Home() {
   const [results, setResults] = useState({});
+  const [loadingMap, setLoadingMap] = useState(
+    categories.reduce((acc, cat) => {
+      acc[cat] = true;
+      return acc;
+    }, {}),
+  );
 
   useEffect(() => {
-    Promise.all(
-      categories.map((cat) =>
-        fetch(`https://dummyjson.com/products/category/${cat}`)
-          .then((res) => res.json())
-          .then((data) => ({
-            category: cat,
-            products: data.products,
-          })),
-      ),
-    )
-      .then((data) => {
-        const formatted = {};
-        data.forEach((item) => {
-          formatted[item.category] = item.products;
-        });
+    categories.forEach((cat) => {
+      fetch(`https://dummyjson.com/products/category/${cat}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setResults((prev) => ({
+            ...prev,
+            [cat]: data.products || [],
+          }));
 
-        setResults(formatted);
-      })
-      .catch((err) => console.error(err));
+          setLoadingMap((prev) => ({
+            ...prev,
+            [cat]: false,
+          }));
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoadingMap((prev) => ({
+            ...prev,
+            [cat]: false,
+          }));
+        });
+    });
   }, []);
 
   return (
@@ -42,7 +51,12 @@ function Home() {
       <HeroSlider />
 
       {categories.map((cat) => (
-        <SlideProduct key={cat} title={cat} products={results[cat]} />
+        <SlideProduct
+          key={cat}
+          title={cat}
+          products={results[cat] || []}
+          loading={loadingMap[cat]}
+        />
       ))}
     </div>
   );
