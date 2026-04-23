@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 // assets
 import Logo from "/src/img/logo.png";
@@ -7,7 +7,10 @@ import { FaSearch } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { TiShoppingCart } from "react-icons/ti";
 import "./header.css";
+import { CartContext } from "../context/CartContext";
 function TopHeader() {
+  const { cartItems } = useContext(CartContext);
+
   return (
     <div className="top_header">
       <div className="container">
@@ -34,7 +37,7 @@ function TopHeader() {
           <div className="icon">
             <TiShoppingCart />
 
-            <span className="count">0</span>
+            <span className="count">{cartItems.length}</span>
           </div>
         </div>
       </div>
